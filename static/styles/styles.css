@@ -34,6 +34,7 @@ body {
     border-radius: 15px; /* Pancake shape */
     cursor: pointer;
     margin-bottom: 0; /* Remove the vertical space between pancakes */
+    transition: transform 0.3s ease; /* Animation for flipping */
 }
 
 .pancake:first-child {
@@ -46,4 +47,9 @@ body {
     width: 200px; /* Smaller pancake */
     height: 30px; /* Smaller pancake height */
     margin-bottom: 5px; /* Adjust bottom margin for smaller pancake */
+}
+
+.flip {
+    transform: rotateX(180deg); /* Flip the pancake */
+    transition: transform 0.5s ease; /* Add transition for smoother animation */
 }
