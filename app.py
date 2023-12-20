@@ -6,9 +6,11 @@ class Solution:
     def pancakeSortLevel1(self, A):
         flips = []
 
+        # Proper sorting logic for two pancakes
         if A[1] > A[0]:  # If the larger pancake is on top
             flips.append(2)  # Flip the entire stack
             flips.append(1)
+            A = [A[1], A[0]]  # Update the order of pancakes
 
         return flips if flips else None
 

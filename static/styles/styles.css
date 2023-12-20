@@ -53,3 +53,30 @@ body {
     transform: rotateX(180deg); /* Flip the pancake */
     transition: transform 0.5s ease; /* Add transition for smoother animation */
 }
+
+/* Your existing styles */
+.pancake-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pancake-stack .pancake {
+    border-radius: 10px; /* Adjust border-radius for rounded corners */
+    margin-bottom: -5px; /* Remove the gap between pancakes */
+}
+
+.pancake-stack .pancake:nth-child(1) {
+    width: 200px; /* Adjust as needed for the bigger top pancake */
+    height: 30px;
+    background-color: #f9c74f; /* Color for the top pancake */
+}
+
+.pancake-stack .pancake:nth-child(2) {
+    width: 150px; /* Adjust as needed for the smaller bottom pancake */
+    height: 25px;
+    background-color: #277da1; /* Color for the bottom pancake */
+    margin-bottom: 0; /* Reset margin to align properly */
+}
+
+
