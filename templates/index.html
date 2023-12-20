@@ -3,102 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Pancake Sorting Game</title>
-    <style>
-        /* Styles for centering content */
-        body, html {
-            height: 100%;
-            display: flex;
-            flex-direction: column; /* Change to column layout */
-            justify-content: flex-end; /* Move content to the bottom */
-            align-items: center;
-            margin: 0;
-            position: relative;
-        }
-
-        /* Background image styles */
-        body {
-            background-image: url('/static/background.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-
-        /* Play button styles */
-        .play-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background-color: rgba(255, 255, 255, 0.7); /* Adjust the background color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Pancake styles */
-        .pancakes {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 1; /* Ensure pancakes appear above the background */
-        }
-
-        .pancake {
-            width: 200px;
-            height: 30px; /* Pancake height */
-            background: linear-gradient(#e1a155, #e1a155, #f9d97a, #e1a155, #e1a155); /* Light brown with cream strip */
-            border: 2px solid #c76b22; /* Rough boundary */
-            border-radius: 15px; /* Pancake shape */
-            position: relative;
-            transform-origin: bottom center;
-            cursor: pointer;
-            margin: 0; /* No margin between pancakes */
-        }
-
-        /* Animation for flipping */
-        .flip {
-            animation: flipAnimation 0.5s ease-in-out;
-        }
-
-        @keyframes flipAnimation {
-            0% {
-                transform: rotateX(0deg);
-            }
-            50% {
-                transform: rotateX(90deg);
-            }
-            100% {
-                transform: rotateX(0deg);
-            }
-        }
-
-        /* Different sizes for each pancake */
-        .pancake:nth-child(1) {
-            width: 100px;
-            height: 20px;
-        }
-
-        .pancake:nth-child(2) {
-            width: 140px;
-            height: 25px;
-        }
-
-        .pancake:nth-child(3) {
-            width: 180px;
-            height: 30px;
-        }
-
-        .pancake:nth-child(4) {
-            width: 220px;
-            height: 35px;
-        }
-    </style>
+    <link rel="stylesheet" href="../static/styles/styles.css">
 </head>
 <body>
-    <div class="play-button" onclick="toggleAudio()">Play Music</div>
-
     <div class="pancakes">
-        <div class="pancake" onclick="flipPancake(this)"></div>
-        <div class="pancake" onclick="flipPancake(this)"></div>
         <div class="pancake" onclick="flipPancake(this)"></div>
         <div class="pancake" onclick="flipPancake(this)"></div>
     </div>
@@ -115,16 +23,6 @@
             setTimeout(() => {
                 pancake.classList.remove('flip');
             }, 500);
-        }
-
-        // Toggle audio playback
-        function toggleAudio() {
-            var audio = document.getElementById('background-audio');
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
         }
     </script>
 </body>

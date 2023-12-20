@@ -1,0 +1,49 @@
+/* Styles for centering content */
+body, html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Move content to the bottom */
+    align-items: center;
+    margin: 0;
+    position: relative;
+}
+
+/* Background image styles */
+body {
+    background-image: url('/static/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Pancake container styles */
+.pancakes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1; /* Ensure pancakes appear above the background */
+    margin-bottom: 20px; /* Margin for bottom space */
+}
+
+/* Pancake styles */
+.pancake {
+    width: 200px;
+    height: 30px; /* Pancake height */
+    background: linear-gradient(#e1a155, #e1a155, #f9d97a, #e1a155, #e1a155); /* Light brown with cream strip */
+    border: 2px solid #c76b22; /* Rough boundary */
+    border-radius: 15px; /* Pancake shape */
+    cursor: pointer;
+    margin-bottom: 0; /* Remove the vertical space between pancakes */
+}
+
+.pancake:first-child {
+    width: 220px; /* Larger pancake */
+    height: 35px; /* Larger pancake height */
+    z-index: 2; /* Ensure the larger pancake is above */
+}
+
+.pancake:last-child {
+    width: 200px; /* Smaller pancake */
+    height: 30px; /* Smaller pancake height */
+    margin-bottom: 5px; /* Adjust bottom margin for smaller pancake */
+}
