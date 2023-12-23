@@ -38,13 +38,13 @@ body {
 }
 
 .pancake:first-child {
-    width: 220px; /* Larger pancake */
+    /* width: 220px; Larger pancake */
     height: 35px; /* Larger pancake height */
     z-index: 2; /* Ensure the larger pancake is above */
 }
 
 .pancake:last-child {
-    width: 200px; /* Smaller pancake */
+    /* width: 200px; Smaller pancake */
     height: 30px; /* Smaller pancake height */
     margin-bottom: 5px; /* Adjust bottom margin for smaller pancake */
 }
@@ -52,4 +52,25 @@ body {
 .flip {
     transform: rotateX(180deg); /* Flip the pancake */
     transition: transform 0.5s ease; /* Add transition for smoother animation */
+}
+
+.level-complete{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+h1{
+    font-family: 'Roboto', sans-serif;
+}
+
+button{
+    border: 5px solid violet;
+    background-color: white;
+    color: violet;
+    font-size: 20px;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
 }
