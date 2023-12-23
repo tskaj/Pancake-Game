@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Pancake Sorting Game</title>
     <link rel="stylesheet" href="/static/styles/styles.css">
 </head>
+
 <body>
+    <div id="level-complete" style="display: none;">
+        <h1>Level Completed!</h1>
+        <button>Move To Next Level</button>
+    </div>
     <div class="pancakes">
         <!-- Level 1: Two pancakes -->
-        <div class="level" id="level1">
-            <div class="pancake" onclick="flipPancake(1, [2, 1], this)"></div>
-            <div class="pancake" onclick="flipPancake(1, [2, 1], this)"></div>
+        <div class="level" id="level1" style="display: none;">
+            <div class="pancake" onclick="flipPancake(0, 'level1', this)" style="width:250px;margin:auto"></div>
+            <div class="pancake" onclick="flipPancake(1, 'level1', this)" style="width:200px; margin:auto"></div>
         </div>
-        
+
         <!-- Level 2: Three pancakes -->
         <div class="level" id="level2" style="display: none;">
-            <div class="pancake" onclick="flipPancake(2, [3, 2, 1], this)"></div>
-            <div class="pancake" onclick="flipPancake(2, [3, 2, 1], this)"></div>
-            <div class="pancake" onclick="flipPancake(2, [3, 2, 1], this)"></div>
+            <div class="pancake" onclick="flipPancake(0, 'level2', this)" style="width:250px;margin:auto"></div>
+            <div class="pancake" onclick="flipPancake(1, 'level2', this)" style="width:300px;margin:auto"></div>
+            <div class="pancake" onclick="flipPancake(2, 'level2', this)" style="width:200px; margin:auto"></div>
         </div>
-        
+
         <!-- Level 3: Four pancakes -->
-        <div class="level" id="level3" style="display: none;">
-            <div class="pancake" onclick="flipPancake(3, [4, 3, 2, 1], this)"></div>
-            <div class="pancake" onclick="flipPancake(3, [4, 3, 2, 1], this)"></div>
-            <div class="pancake" onclick="flipPancake(3, [4, 3, 2, 1], this)"></div>
-            <div class="pancake" onclick="flipPancake(3, [4, 3, 2, 1], this)"></div>
+        <div class="level" id="level3">
+            <div class="pancake" onclick="flipPancake(0, 'level3', this)" style="width:250px;margin:auto"></div>
+            <div class="pancake" onclick="flipPancake(1, 'level3', this)" style="width:350px;margin:auto"></div>
+            <div class="pancake" onclick="flipPancake(2, 'level3', this)" style="width:200px;margin:auto"></div>
+            <div class="pancake" onclick="flipPancake(3, 'level3', this)" style="width:300px;margin:auto"></div>
         </div>
     </div>
 
@@ -37,53 +43,83 @@
     <div id="message" class="message"></div>
 
     <script>
-        function flipPancake(level, pancakeSizes, pancakeElement) {
-            const adjustedPancakeSizes = pancakeSizes.map(size => size);
-    
-            fetch(`/flip_pancakes/${level}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(adjustedPancakeSizes)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-    
-                if ('flips' in data && data.flips.length > 0) {
-                    const flipsNeeded = data.flips;
-                    console.log(`Flips needed: ${flipsNeeded}`);
-                    document.getElementById('message').innerText = `Flips needed: ${flipsNeeded}`;
-    
-                    // Apply flipping animation
-                    const pancakesToFlip = document.querySelectorAll('.pancakes .pancake');
-                    pancakesToFlip.forEach(pancake => {
-                        pancake.classList.add('flip');
-                        pancake.addEventListener('transitionend', () => {
-                            pancake.classList.remove('flip');
-                        }, { once: true });
-                    });
-    
-                    // Check completion and progress to the next level
-                    handleLevelCompletion(level);
-                } else if ('message' in data && data.message.includes('completed')) {
-                    // Handle completion scenario
-                    document.getElementById('message').innerText = 'Level Completed';
-                } else if ('message' in data && data.message.includes('sorted')) {
-                    // Handle sorted scenario
-                    document.getElementById('message').innerText = 'Pancakes Sorted';
-                    handleLevelCompletion(level);
-                } else {
-                    // Handle other scenarios or errors
-                    document.getElementById('message').innerText = 'Error';
+        function flipPancake(index, level){
+            console.log("flipping")
+            const parentDiv = document.getElementById(level);
+            console.log(parentDiv)
+            const childNodes = parentDiv.children;
+            const len = childNodes.length;
+
+            for (let i=0; i<=parseInt(index/2); i++){ 
+                let temp = childNodes[i].style.width;
+                childNodes[i].style.width = childNodes[index-i].style.width
+                childNodes[index-i].style.width = temp
+            }
+
+            const levelCompleted = true;
+
+            for (let i=0; i<len-1; i++){
+                if (childNodes[i].style.width>childNodes[i+1].style.width){
+                    levelCompleted = false
+                    console.log("isFallus")
                 }
-            });
+            }
+
+            // for (let i=0; i<len; i++){
+            //     console.log()
+            // }
+
+            if (levelCompleted){
+                document.getElementById("level-complete").style.display = "block";
+            }
         }
-    
+        // function flipPancake(level, pancakeSizes, pancakeElement) {
+        //     const adjustedPancakeSizes = pancakeSizes.map(size => size);
+
+        //     fetch(`/flip_pancakes/${level}`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(adjustedPancakeSizes)
+        //     })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+
+        //             if ('flips' in data && data.flips.length > 0) {
+        //                 const flipsNeeded = data.flips;
+        //                 console.log(`Flips needed: ${flipsNeeded}`);
+        //                 document.getElementById('message').innerText = `Flips needed: ${flipsNeeded}`;
+
+        //                 // Apply flipping animation
+        //                 const pancakesToFlip = document.querySelectorAll('.pancakes .pancake');
+        //                 pancakesToFlip.forEach(pancake => {
+        //                     pancake.classList.add('flip');
+        //                     pancake.addEventListener('transitionend', () => {
+        //                         pancake.classList.remove('flip');
+        //                     }, { once: true });
+        //                 });
+
+        //                 // Check completion and progress to the next level
+        //                 handleLevelCompletion(level);
+        //             } else if ('message' in data && data.message.includes('completed')) {
+        //                 // Handle completion scenario
+        //                 document.getElementById('message').innerText = 'Level Completed';
+        //             } else if ('message' in data && data.message.includes('sorted')) {
+        //                 // Handle sorted scenario
+        //                 document.getElementById('message').innerText = 'Pancakes Sorted';
+        //                 handleLevelCompletion(level);
+        //             } else {
+        //                 // Handle other scenarios or errors
+        //                 document.getElementById('message').innerText = 'Error';
+        //             }
+        //         });
+        // }
+
         function handleLevelCompletion(level) {
             document.getElementById(`level${level}`).style.display = 'none'; // Hide current level
-    
+
             // Show next level
             const nextLevel = document.getElementById(`level${level + 1}`);
             if (nextLevel) {
@@ -95,4 +131,5 @@
         }
     </script>
 </body>
+
 </html>
