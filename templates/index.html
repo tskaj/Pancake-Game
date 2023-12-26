@@ -10,11 +10,16 @@
 <body>
     <div id="level-complete" style="display: none;">
         <h1>Level Completed!</h1>
-        <button>Move To Next Level</button>
+        <button id="b1" style="display:none" onclick="moveToNextLevel('level1', 'level2')">Move To Next Level</button>
+        <button id="b2" style="display:none" onclick="moveToNextLevel('level2', 'level3')">Move To Next Level</button>
+    </div>
+    <div id="game-complete" style="display: none;">
+        <h1>Congratulations! You won!</h1>
+        <button onclick="moveToNextLevel('level3', 'level1')">Play Again</button>
     </div>
     <div class="pancakes">
         <!-- Level 1: Two pancakes -->
-        <div class="level" id="level1" style="display: none;">
+        <div class="level" id="level1">
             <div class="pancake" onclick="flipPancake(0, 'level1', this)" style="width:250px;margin:auto"></div>
             <div class="pancake" onclick="flipPancake(1, 'level1', this)" style="width:200px; margin:auto"></div>
         </div>
@@ -27,7 +32,7 @@
         </div>
 
         <!-- Level 3: Four pancakes -->
-        <div class="level" id="level3">
+        <div class="level" id="level3" style="display:none">
             <div class="pancake" onclick="flipPancake(0, 'level3', this)" style="width:250px;margin:auto"></div>
             <div class="pancake" onclick="flipPancake(1, 'level3', this)" style="width:350px;margin:auto"></div>
             <div class="pancake" onclick="flipPancake(2, 'level3', this)" style="width:200px;margin:auto"></div>
@@ -44,9 +49,7 @@
 
     <script>
         function flipPancake(index, level){
-            console.log("flipping")
             const parentDiv = document.getElementById(level);
-            console.log(parentDiv)
             const childNodes = parentDiv.children;
             const len = childNodes.length;
 
@@ -61,17 +64,35 @@
             for (let i=0; i<len-1; i++){
                 if (childNodes[i].style.width>childNodes[i+1].style.width){
                     levelCompleted = false
-                    console.log("isFallus")
                 }
             }
 
-            // for (let i=0; i<len; i++){
-            //     console.log()
-            // }
-
             if (levelCompleted){
-                document.getElementById("level-complete").style.display = "block";
+                if (level=="level1" || level=="level2"){
+                    document.getElementById("level-complete").style.display = "block";
+                    if (level=="level1"){
+                        document.getElementById("b1").style.display = "block";
+                    }else{
+                        document.getElementById("b2").style.display = "block";
+                    }
+                }else{
+                    document.getElementById("game-complete").style.display = "block";   
+                }
             }
+        }
+
+        function moveToNextLevel(currentLevel, nextLevel){
+
+            console.log("moving to next level")
+
+            document.getElementById("b1").style.display = "none";
+            document.getElementById("b2").style.display = "none";
+            document.getElementById(currentLevel).style.display = "none";
+            document.getElementById(nextLevel).style.display = "block";
+            document.getElementById("level-complete").style.display = "none";
+            document.getElementById("game-complete").style.display = "none";
+
+
         }
         // function flipPancake(level, pancakeSizes, pancakeElement) {
         //     const adjustedPancakeSizes = pancakeSizes.map(size => size);
