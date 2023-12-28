@@ -8,6 +8,17 @@
 </head>
 
 <body>
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <button id="audio-control">Mute</button>
+            <h2>How to Play</h2>
+            <p>Instructions go here...</p>
+            <h2>Credits</h2>
+            <p>Creators' Abdullah and Rayyan...</p>
+        </div>
+    </div>
+</div>
+
     <div id="level-complete" style="display: none;">
         <h1>Level Completed!</h1>
         <button id="b1" style="display:none" onclick="moveToNextLevel('level1', 'level2')">Move To Next Level</button>
@@ -48,6 +59,21 @@
     <div id="message" class="message"></div>
 
     <script>
+
+
+document.getElementById('audio-control').addEventListener('click', function() {
+    const audio = document.getElementById('background-audio');
+    if (audio.paused) {
+        audio.play();
+        document.getElementById('audio-control').innerText = 'Mute';
+    } else {
+        audio.pause();
+        document.getElementById('audio-control').innerText = 'Unmute';
+    }
+});
+
+
+        
         function flipPancake(index, level){
             const parentDiv = document.getElementById(level);
             const childNodes = parentDiv.children;
@@ -94,50 +120,48 @@
 
 
         }
-        // function flipPancake(level, pancakeSizes, pancakeElement) {
-        //     const adjustedPancakeSizes = pancakeSizes.map(size => size);
+        function flipPancake(index, level, pancakeElement) {
+    const parentDiv = document.getElementById(level);
+    const childNodes = parentDiv.children;
+    const len = childNodes.length;
 
-        //     fetch(`/flip_pancakes/${level}`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(adjustedPancakeSizes)
-        //     })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             console.log(data);
+    for (let i = 0; i <= parseInt(index / 2); i++) {
+        let temp = childNodes[i].style.width;
+        childNodes[i].style.width = childNodes[index - i].style.width;
+        childNodes[index - i].style.width = temp;
 
-        //             if ('flips' in data && data.flips.length > 0) {
-        //                 const flipsNeeded = data.flips;
-        //                 console.log(`Flips needed: ${flipsNeeded}`);
-        //                 document.getElementById('message').innerText = `Flips needed: ${flipsNeeded}`;
+        // Apply flipping animation
+        childNodes[i].classList.add('flip');
+        childNodes[index - i].classList.add('flip');
+        childNodes[i].addEventListener('transitionend', () => {
+            childNodes[i].classList.remove('flip');
+        }, { once: true });
+        childNodes[index - i].addEventListener('transitionend', () => {
+            childNodes[index - i].classList.remove('flip');
+        }, { once: true });
+    }
 
-        //                 // Apply flipping animation
-        //                 const pancakesToFlip = document.querySelectorAll('.pancakes .pancake');
-        //                 pancakesToFlip.forEach(pancake => {
-        //                     pancake.classList.add('flip');
-        //                     pancake.addEventListener('transitionend', () => {
-        //                         pancake.classList.remove('flip');
-        //                     }, { once: true });
-        //                 });
+    const levelCompleted = true;
 
-        //                 // Check completion and progress to the next level
-        //                 handleLevelCompletion(level);
-        //             } else if ('message' in data && data.message.includes('completed')) {
-        //                 // Handle completion scenario
-        //                 document.getElementById('message').innerText = 'Level Completed';
-        //             } else if ('message' in data && data.message.includes('sorted')) {
-        //                 // Handle sorted scenario
-        //                 document.getElementById('message').innerText = 'Pancakes Sorted';
-        //                 handleLevelCompletion(level);
-        //             } else {
-        //                 // Handle other scenarios or errors
-        //                 document.getElementById('message').innerText = 'Error';
-        //             }
-        //         });
-        // }
+    for (let i = 0; i < len - 1; i++) {
+        if (childNodes[i].style.width > childNodes[i + 1].style.width) {
+            levelCompleted = false;
+        }
+    }
 
+    if (levelCompleted) {
+        if (level == "level1" || level == "level2") {
+            document.getElementById("level-complete").style.display = "block";
+            if (level == "level1") {
+                document.getElementById("b1").style.display = "block";
+            } else {
+                document.getElementById("b2").style.display = "block";
+            }
+        } else {
+            document.getElementById("game-complete").style.display = "block";
+        }
+    }
+}
         function handleLevelCompletion(level) {
             document.getElementById(`level${level}`).style.display = 'none'; // Hide current level
 

@@ -92,3 +92,29 @@ button{
 #b2{
     margin-left: 30px;
 }
+
+/* Existing styles */
+
+/* Existing styles */
+
+.container {
+    display: flex;
+    gap: 100px; /* Spacing between the sidebar and game */
+}
+
+.sidebar {
+    width: 200px; /* Adjust width as needed */
+    background-color: rgba(206, 169, 118, 0.7);
+    padding: 20px;
+    /* Other sidebar styles */
+    margin-right: 20px; /* Add spacing between sidebar and game */
+}
+
+.game {
+    flex: 1;
+    /* Your existing game styles */
+}
+
+
+
+
